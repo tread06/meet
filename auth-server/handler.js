@@ -122,6 +122,7 @@ module.exports.getCalendarEvents = async (event) => {
 
   return new Promise((resolve, reject) => {  
 
+    //use the google API package to access the calendar api events endpoint
     calendar.events.list(
       {
         calendarId: calendar_id,
