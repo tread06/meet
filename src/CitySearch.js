@@ -1,11 +1,28 @@
 import React, { Component } from 'react';
 
 class CitySearch extends Component {
-  //shorthand for using the constructor to initialize state
   state = {
     query: '',
     suggestions: [],
-    showSuggestions: false
+    showSuggestions: false,
+  };
+
+  componentDidMount() {
+    document.addEventListener('mousedown', this.handleClick);
+  }
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.handleClick);
+  }
+
+  handleClick = (e) => {
+    let componentRoot = document.querySelector('.suggestions');
+    if (!componentRoot.contains(e.target)) {
+      console.log('Clicked off the list');
+      this.setState({
+        showSuggestions: false,
+      });
+      return;
+    }
   };
 
   handleInputChanged = (event) => {
@@ -21,11 +38,11 @@ class CitySearch extends Component {
   };
 
   handleItemClicked = (suggestion) => {
+    console.log('item clicked');
     this.setState({
       query: suggestion,
-      showSuggestions: false
+      showSuggestions: false,
     });
-
     this.props.updateEvents(suggestion);
   };
 
@@ -37,9 +54,14 @@ class CitySearch extends Component {
           className="city"
           value={this.state.query}
           onChange={this.handleInputChanged}
-          onFocus={() => { this.setState({ showSuggestions: true }) }}
+          onFocus={() => {
+            this.setState({ showSuggestions: true });
+          }}
         />
-        <ul className="suggestions" style={this.state.showSuggestions ? {}: { display: 'none' }}>
+        <ul
+          className="suggestions"
+          style={this.state.showSuggestions ? {} : { display: 'none' }}
+        >
           {/* Render suggestions. */}
           {this.state.suggestions.map((suggestion) => (
             <li
@@ -52,7 +74,7 @@ class CitySearch extends Component {
             </li>
           ))}
           {/* Render all cites list item. */}
-          <li key="all" onClick={() => this.handleItemClicked("all")}>
+          <li key="all" onClick={() => this.handleItemClicked('all')}>
             <b>See all cities</b>
           </li>
         </ul>
