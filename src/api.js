@@ -1,3 +1,4 @@
+import { mockData } from "./mock-data";
 
 //create a new array of only event.location names from an event list
 export const extractLocations = (events) => {
@@ -10,4 +11,8 @@ export const extractLocations = (events) => {
 
 export const extractFirstEvent = (events) => {
   return events[0];
+};
+
+export const getEvents = async () => {
+  return mockData;
 };
