@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 class NumberOfEvents extends Component {
+  //to do: add max number of events
   //shorthand for using the constructor to initialize state
   state = {
     numberOfEvents: 32,
@@ -10,6 +11,7 @@ class NumberOfEvents extends Component {
     this.setState({
       numberOfEvents: event.target.value,
     });
+    this.props.updateEventCount(event.target.value);
   };
 
   render() {

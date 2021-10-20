@@ -4,9 +4,11 @@ import Event from './Event';
 class EventList extends Component {
   render() {
     const { events } = this.props;
+    const filteredEvents = events.slice(0,this.props.count);
+    
     return (
       <ul className="EventList">
-        {events.map((event) => (
+        {filteredEvents.map((event) => (
           <li key={event.id}>
             <Event event={event} />
           </li>
@@ -15,5 +17,4 @@ class EventList extends Component {
     );
   }
 }
-
 export default EventList;

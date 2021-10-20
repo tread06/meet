@@ -17,7 +17,6 @@ class CitySearch extends Component {
   handleClick = (e) => {
     let componentRoot = document.querySelector('.suggestions');
     if (!componentRoot.contains(e.target)) {
-      console.log('Clicked off the list');
       this.setState({
         showSuggestions: false,
       });
@@ -38,7 +37,6 @@ class CitySearch extends Component {
   };
 
   handleItemClicked = (suggestion) => {
-    console.log('item clicked');
     this.setState({
       query: suggestion,
       showSuggestions: false,
