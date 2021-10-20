@@ -3,16 +3,14 @@ import React, { Component } from 'react';
 class NumberOfEvents extends Component {
   //shorthand for using the constructor to initialize state
   state = {
-    numberOfEvents: 32
+    numberOfEvents: 32,
   };
 
-  handleInputChanged = (event) =>{
-    const value = event.target.value;        
+  handleInputChanged = (event) => {
     this.setState({
-      numberOfEvents: value
+      numberOfEvents: event.target.value,
     });
-  }
-
+  };
 
   render() {
     return (
