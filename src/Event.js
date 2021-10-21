@@ -15,7 +15,7 @@ class Event extends Component {
   render() {
     return (
       <div className="event">
-        <h3 className="event-name">{this.props.event.summary}</h3>
+        <h2 className="event-name">{this.props.event.summary}</h2>
         <p className="event-date-time">{this.props.event.start.dateTime}</p>
         <p className="event-location">{this.props.event.location}</p>
         {!this.state.detailsHidden && (

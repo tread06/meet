@@ -46,7 +46,7 @@ class CitySearch extends Component {
 
   render() {
     return (
-      <div className="CitySearch">
+      <div className="CitySearch">        
         <input
           type="text"
           className="city"
@@ -55,6 +55,7 @@ class CitySearch extends Component {
           onFocus={() => {
             this.setState({ showSuggestions: true });
           }}
+          placeholder="Search cities"
         />
         <ul
           className="suggestions"
