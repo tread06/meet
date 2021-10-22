@@ -1,4 +1,6 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:500);
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter&family=Lobster&family=Montserrat:wght@300;400&display=swap');
 
 .App {
   text-align: center;
@@ -7,6 +9,18 @@
 
 .App * {
   box-sizing: border-box;
+  font-family: 'Inter';  
+}
+
+.banner-text {
+  font-size: 80px;
+  color: #12337a;
+  font-family: 'Lobster';
+  text-shadow: 5px 3px rgba(0, 0, 0, 0.199);
+}
+.divider {
+  background-color: #12337a2a;
+  height: 2px;
 }
 
 ul {
@@ -16,9 +30,6 @@ ul {
 
 p {
   margin: 5px 0;
-}
-b {
-  color: #12337a;
 }
 
 .display-none {
@@ -47,47 +58,12 @@ input[type='number'] {
   width: 250px;
 }
 
-.CitySearch {
-  display: flex;
-  flex-direction: column;
-  flex-basis: 300px;
-  max-width: 300px;
-  margin: auto;
-  position: relative;
-}
-
-.suggestions {
-  width: 250px;
-  position: absolute;
-  z-index: 2;
-  align-self: center;
-  margin: 0;
-  top: 43px;
-  font-size: 14px;
-  box-shadow: 10px 10px 16px -12px rgba(0, 0, 0, 0.75);
-}
-
-.suggestions > li {
-  text-align: left;
-  padding: 8px 6px 8px 10px;
-  background-color: #eee;
-  cursor: default;
-}
-
-.suggestions > li:last-child {
-  border-bottom-left-radius: 4px;
-  border-bottom-right-radius: 4px;
-}
-
-.suggestions > li:hover {
-  background-color: #bcc6dc;
-}
-
 .event {
   margin: auto;
   padding: 15px 15px 35px;
   margin-bottom: 10px;
   text-align: left;
+  background-color: white;
   border: 1px solid #ccc;
   border-radius: 4px;
   position: relative;
@@ -103,21 +79,22 @@ input[type='number'] {
   padding: 5px 8px;
   outline: none;
   cursor: pointer;
-  background-color: #3b66c4;
+  background-color: #12337a;
   color: #fff;
-  border: 1px solid #3b66c4;
+  border: 1px solid #12337a;
   border-radius: 5px;
   transition: background-color 0.2s;
 }
 .toggle-details-button:hover {
-  background-color: #4e8ed6;
-  border: 1px solid #4e8ed6;
+  background-color: #2951a8;
+  border: 1px solid #2951a8;
 }
 
 .event-name {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 600;
   color: #12337a;
+  font-family: 'Roboto';
 }
 
 .event-group-name {
@@ -134,10 +111,59 @@ input[type='number'] {
   overflow-x: hidden;
 }
 
-.numberOfEvents {
-  width: 200px;
-  margin: 20px auto;
-  text-align: center;
+.CitySearch {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 300px;
+  max-width: 300px;
+  margin: auto;
+  position: relative;
+  font-family: 'Roboto';
+  color: rgba(0, 0, 0, 0.397);
+}
+
+.suggestions {
+  width: 250px;
+  position: absolute;
+  z-index: 2;
+  align-self: center;
+  margin: 0;
+  top: 70px;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.781);
+  box-shadow: 10px 10px 16px -12px rgba(0, 0, 0, 0.75);
+
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.suggestions > li {
+  text-align: left;
+  padding: 8px 6px 8px 10px;
+  background-color: rgb(255, 255, 255);
+  cursor: default;
+}
+
+.suggestions > li:last-child {
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+.suggestions > li:hover {
+  background-color: #12337a;
+  color: white;
+}
+
+.NumberOfEvents {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 300px;
+  max-width: 300px;
+  margin: auto;
+  position: relative;
+  font-family: 'Roboto';
+  color: rgba(0, 0, 0, 0.397);
 }
 
 .button-wrapper {

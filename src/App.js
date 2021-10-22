@@ -5,6 +5,7 @@ import CitySearch from './CitySearch';
 import NumberOfEvents from './NumberOfEvents';
 import { Component } from 'react';
 import { getEvents, extractLocations } from './api';
+import Banner from './banner';
 
 class App extends Component {
   state = {
@@ -48,6 +49,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <Banner />
         <CitySearch
           locations={this.state.locations}
           updateEvents={this.updateEvents}
