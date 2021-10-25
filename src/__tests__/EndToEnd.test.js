@@ -66,13 +66,12 @@ describe('Filter events by city', () => {
 
     //enter the key 'l'
     page.keyboard.press('l');
-
     const suggestionsCount = await page.$$eval(
       '.suggestions li',
       (element) => element.length
     );
 
-    //expect there to be 3 suggestions includsing the show all suggestion
+    //expect there to be 3 suggestions including the 'show all' suggestion
     expect(suggestionsCount).toEqual(3);
   });
 
