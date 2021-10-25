@@ -22,8 +22,7 @@ describe('<NumberOfEvents /> component', () => {
     expect(NumberOfEventsWrapper.find('.number-input').prop('value')).toBe(numberOfEvents);
   });
 
-  test('initial state is 32', () => {
-    console.log(NumberOfEventsWrapper.state('numberOfEvents'));
+  test('initial state is 32', () => {   
     expect(NumberOfEventsWrapper.state('numberOfEvents')).toBe(32);
     expect(NumberOfEventsWrapper.find('.number-input').prop('value')).toBe(32);
   });
