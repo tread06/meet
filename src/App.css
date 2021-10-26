@@ -251,6 +251,13 @@ input[type='number'] {
   font-family: 'Roboto';
 }
 
+/* loading */
+
+.loading-spinner {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
   .data-vis-wrapper {

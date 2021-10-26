@@ -6,12 +6,14 @@ import NumberOfEvents from './NumberOfEvents';
 import { Component } from 'react';
 import { getEvents, extractLocations } from './api';
 import Banner from './banner';
+import { BeatLoader } from 'react-spinners';
 
 class App extends Component {
   state = {
     events: [],
     locations: [],
     eventCount: 32,
+    isLoading: false,
   };
 
   componentDidMount() {
@@ -29,6 +31,7 @@ class App extends Component {
   }
 
   updateEvents = (location) => {
+    this.setState({ isLoading: true });
     getEvents().then((events) => {
       const locationEvents =
         location === 'all'
@@ -37,10 +40,11 @@ class App extends Component {
       this.setState({
         events: locationEvents,
       });
+      this.setState({ isLoading: false });
     });
   };
 
-  updateEventCount = (count) => {    
+  updateEventCount = (count) => {
     this.setState({
       eventCount: count,
     });
@@ -55,6 +59,13 @@ class App extends Component {
           updateEvents={this.updateEvents}
         />
         <NumberOfEvents updateEventCount={this.updateEventCount} />
+        <div className="loading-spinner">
+          <BeatLoader
+            loading={this.state.isLoading}
+            color="#cc1f00"
+            size={40}
+          />
+        </div>
         <EventList events={this.state.events} count={this.state.eventCount} />
       </div>
     );
