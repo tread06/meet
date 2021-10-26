@@ -18,11 +18,13 @@ class App extends Component {
 
   componentDidMount() {
     this.mounted = true;
+    this.setState({ isLoading: true });
     getEvents().then((events) => {
       if (this.mounted) {
         //to facilitate tests which unmount components immediatly and use mock data, only load data if the component is mounted
         this.setState({ events, locations: extractLocations(events) });
       }
+      this.setState({ isLoading: false });
     });
   }
 
