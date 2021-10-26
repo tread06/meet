@@ -13,7 +13,7 @@ class App extends Component {
     events: [],
     locations: [],
     eventCount: 32,
-    isLoading: false,
+    isLoading: true,
   };
 
   componentDidMount() {
