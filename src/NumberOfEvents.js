@@ -1,18 +1,25 @@
 import React, { Component } from 'react';
+import { ErrorAlert } from './Alert';
 
 class NumberOfEvents extends Component {
   //to do: add max number of events
   //shorthand for using the constructor to initialize state
   state = {
     numberOfEvents: 32,
+    errorText: '',
   };
 
   handleInputChanged = (event) => {
     let count = event.target.value;
-    if (count < 0) count = 0;
+    let errorText = '';
+
+    if (count <= 0 || count > 32) {
+      errorText = 'Select a number from 1 to 32';
+    }
 
     this.setState({
       numberOfEvents: count,
+      errorText: errorText,
     });
     this.props.updateEventCount(count);
   };
@@ -28,6 +35,7 @@ class NumberOfEvents extends Component {
           onChange={this.handleInputChanged}
           min="0"
         />
+        <ErrorAlert text={this.state.errorText} />
       </div>
     );
   }
