@@ -16,7 +16,6 @@ ReactDOM.render(
 );
 
 //test atatus
-console.log("Testing atatus");
 atatus.notify(new Error('Test Atatus Setup'));
 
 // If you want your app to work offline and load faster, you can change
