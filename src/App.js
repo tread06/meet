@@ -25,8 +25,8 @@ class App extends Component {
     this.setState({ isLoading: true });
 
     //validate access token --- update show welcome screen status
-
     if (this.state.online) {
+      console.log('online: true');
       const accessToken = localStorage.getItem('access_token');
       const isTokenValid = (await checkToken(accessToken)).error ? false : true;
       const searchParams = new URLSearchParams(window.location.search);
@@ -34,7 +34,7 @@ class App extends Component {
 
       //if a code is found or a the token is valid, don't show the welcome screen
       this.setState({ showWelcomeScreen: !(code || isTokenValid) });
-      console.log('online: true');
+
       console.log('isTokenValid: ' + isTokenValid);
       console.log('Show welcome screen: ' + this.state.showWelcomeScreen);
 
