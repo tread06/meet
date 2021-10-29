@@ -32,6 +32,8 @@ class App extends Component {
 
     //if a code is found or a the token is valid, don't show the welcome screen
     this.setState({ showWelcomeScreen: !(code || isTokenValid) });
+
+    console.log('isTokenValid: ' + isTokenValid);
     console.log('Show welcome screen: ' + this.state.showWelcomeScreen);
 
     if ((code || isTokenValid) && this.mounted) {
