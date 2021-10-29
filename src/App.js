@@ -15,7 +15,7 @@ class App extends Component {
     locations: [],
     eventCount: 32,
     isLoading: true,
-    online: false,
+    online: true,
   };
 
   componentDidMount() {
