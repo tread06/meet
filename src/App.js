@@ -23,27 +23,42 @@ class App extends Component {
   async componentDidMount() {
     this.mounted = true;
     this.setState({ isLoading: true });
+    this.updateOnlineStatus();
 
-    //validate access token --- update show welcome screen status
-    const accessToken = localStorage.getItem('access_token');
-    const isTokenValid = (await checkToken(accessToken)).error ? false : true;
-    const searchParams = new URLSearchParams(window.location.search);
-    const code = searchParams.get('code');
+    //validate access token --- update show welcome screen status    
+    
+    if(this.state.online)
+    {
+      const accessToken = localStorage.getItem('access_token');
+      const isTokenValid = (await checkToken(accessToken)).error ? false : true;
+      const searchParams = new URLSearchParams(window.location.search);
+      const code = searchParams.get('code');
 
-    //if a code is found or a the token is valid, don't show the welcome screen
-    this.setState({ showWelcomeScreen: !(code || isTokenValid) });
+      //if a code is found or a the token is valid, don't show the welcome screen
+      this.setState({ showWelcomeScreen: !(code || isTokenValid) });      
+      console.log('isTokenValid: ' + isTokenValid);
+      console.log('Show welcome screen: ' + this.state.showWelcomeScreen);\
 
-    console.log('isTokenValid: ' + isTokenValid);
-    console.log('Show welcome screen: ' + this.state.showWelcomeScreen);
-
-    if ((code || isTokenValid) && this.mounted) {
-      getEvents().then((events) => {
-        if (this.mounted) {
-          //to facilitate tests which unmount components immediatly and use mock data, only load data if the component is mounted
-          this.setState({ events, locations: extractLocations(events) });
-        }
-        this.setState({ isLoading: false });
-      });
+      if ((code || isTokenValid) && this.mounted) {
+        getEvents().then((events) => {
+          if (this.mounted) {
+            //to facilitate tests which unmount components immediatly and use mock data, only load data if the component is mounted
+            this.setState({ events, locations: extractLocations(events) });
+          }
+          this.setState({ isLoading: false });
+        });
+      }
+    }
+    else {
+      if (this.mounted) {
+        getEvents().then((events) => {
+          if (this.mounted) {
+            //to facilitate tests which unmount components immediatly and use mock data, only load data if the component is mounted
+            this.setState({ events, locations: extractLocations(events) });
+          }
+          this.setState({ isLoading: false });
+        });
+      }
     }
   }
 
