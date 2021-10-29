@@ -4,10 +4,11 @@ import EventList from './EventList';
 import CitySearch from './CitySearch';
 import NumberOfEvents from './NumberOfEvents';
 import { Component } from 'react';
-import { getEvents, extractLocations } from './api';
+import { getEvents, extractLocations, checkToken, getAccessToken } from './api';
 import Banner from './banner';
 import { BeatLoader } from 'react-spinners';
 import { ErrorAlert } from './Alert';
+import WelcomeScreen from './WelcomeScreen';
 
 class App extends Component {
   state = {
@@ -16,19 +17,32 @@ class App extends Component {
     eventCount: 32,
     isLoading: true,
     online: true,
+    showWelcomeScreen: false,
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     this.mounted = true;
     this.setState({ isLoading: true });
-    getEvents().then((events) => {
-      this.updateOnlineStatus();
-      if (this.mounted) {
-        //to facilitate tests which unmount components immediatly and use mock data, only load data if the component is mounted
-        this.setState({ events, locations: extractLocations(events) });
-      }
-      this.setState({ isLoading: false });
-    });
+
+    //validate access token --- update show welcome screen status
+    const accessToken = localStorage.getItem('access_token');
+    const isTokenValid = (await checkToken(accessToken)).error ? false : true;
+    const searchParams = new URLSearchParams(window.location.search);
+    const code = searchParams.get('code');
+
+    //if a code is found or a the token is valid, don't show the welcome screen
+    this.setState({ showWelcomeScreen: !(code || isTokenValid) });
+    console.log('Show welcome screen: ' + this.state.showWelcomeScreen);
+
+    if ((code || isTokenValid) && this.mounted) {
+      getEvents().then((events) => {
+        if (this.mounted) {
+          //to facilitate tests which unmount components immediatly and use mock data, only load data if the component is mounted
+          this.setState({ events, locations: extractLocations(events) });
+        }
+        this.setState({ isLoading: false });
+      });
+    }
   }
 
   updateOnlineStatus() {
@@ -62,6 +76,9 @@ class App extends Component {
   };
 
   render() {
+    if (this.setState.showWelcomeScreen === undefined)
+      return <div className="App"></div>;
+
     return (
       <div className="App">
         <ErrorAlert
@@ -85,6 +102,12 @@ class App extends Component {
           />
         </div>
         <EventList events={this.state.events} count={this.state.eventCount} />
+        <WelcomeScreen
+          showWelcomeScreen={this.state.showWelcomeScreen}
+          getAccessToken={() => {
+            getAccessToken();
+          }}
+        />
       </div>
     );
   }
