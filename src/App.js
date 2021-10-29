@@ -25,19 +25,19 @@ class App extends Component {
     this.setState({ isLoading: true });
     this.updateOnlineStatus();
 
-    //validate access token --- update show welcome screen status    
-    
-    if(this.state.online)
-    {
+    //validate access token --- update show welcome screen status
+
+    if (this.state.online) {
       const accessToken = localStorage.getItem('access_token');
       const isTokenValid = (await checkToken(accessToken)).error ? false : true;
       const searchParams = new URLSearchParams(window.location.search);
       const code = searchParams.get('code');
 
       //if a code is found or a the token is valid, don't show the welcome screen
-      this.setState({ showWelcomeScreen: !(code || isTokenValid) });      
+      this.setState({ showWelcomeScreen: !(code || isTokenValid) });
+      console.log('online: true');
       console.log('isTokenValid: ' + isTokenValid);
-      console.log('Show welcome screen: ' + this.state.showWelcomeScreen);\
+      console.log('Show welcome screen: ' + this.state.showWelcomeScreen);
 
       if ((code || isTokenValid) && this.mounted) {
         getEvents().then((events) => {
@@ -48,8 +48,8 @@ class App extends Component {
           this.setState({ isLoading: false });
         });
       }
-    }
-    else {
+    } else {
+      console.log('online: false');
       if (this.mounted) {
         getEvents().then((events) => {
           if (this.mounted) {
