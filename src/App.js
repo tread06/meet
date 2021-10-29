@@ -21,8 +21,8 @@ class App extends Component {
   componentDidMount() {
     this.mounted = true;
     this.setState({ isLoading: true });
-    this.updateOnlineStatus();
     getEvents().then((events) => {
+      this.updateOnlineStatus();
       if (this.mounted) {
         //to facilitate tests which unmount components immediatly and use mock data, only load data if the component is mounted
         this.setState({ events, locations: extractLocations(events) });
@@ -32,7 +32,9 @@ class App extends Component {
   }
 
   updateOnlineStatus() {
+    console.log('updating online status...');
     this.setState({ online: navigator.onLine });
+    console.log('Online state: ' + this.state.online);
   }
 
   componentWillUnmount() {
@@ -41,8 +43,8 @@ class App extends Component {
 
   updateEvents = (location) => {
     this.setState({ isLoading: true });
-    this.updateOnlineStatus();
     getEvents().then((events) => {
+      this.updateOnlineStatus();
       this.setState({ online: navigator.onLine });
       const locationEvents =
         location === 'all'
