@@ -16,14 +16,13 @@ class App extends Component {
     locations: [],
     eventCount: 32,
     isLoading: true,
-    online: true,
+    online: navigator.onLine,
     showWelcomeScreen: false,
   };
 
   async componentDidMount() {
     this.mounted = true;
     this.setState({ isLoading: true });
-    this.updateOnlineStatus();
 
     //validate access token --- update show welcome screen status
 
