@@ -7,6 +7,7 @@ import { Component } from 'react';
 import { getEvents, extractLocations } from './api';
 import Banner from './banner';
 import { BeatLoader } from 'react-spinners';
+import { ErrorAlert } from './Alert';
 
 class App extends Component {
   state = {
@@ -14,11 +15,13 @@ class App extends Component {
     locations: [],
     eventCount: 32,
     isLoading: true,
+    online: true,
   };
 
   componentDidMount() {
     this.mounted = true;
     this.setState({ isLoading: true });
+    this.updateOnlineStatus();
     getEvents().then((events) => {
       if (this.mounted) {
         //to facilitate tests which unmount components immediatly and use mock data, only load data if the component is mounted
@@ -28,13 +31,19 @@ class App extends Component {
     });
   }
 
+  updateOnlineStatus() {
+    this.setState({ online: navigator.onLine });
+  }
+
   componentWillUnmount() {
     this.mounted = false;
   }
 
   updateEvents = (location) => {
     this.setState({ isLoading: true });
+    this.updateOnlineStatus();
     getEvents().then((events) => {
+      this.setState({ online: navigator.onLine });
       const locationEvents =
         location === 'all'
           ? events
@@ -55,6 +64,13 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <ErrorAlert
+          text={
+            this.state.online
+              ? ''
+              : 'MeetApp is offline. Events may not be up to date.'
+          }
+        />
         <Banner />
         <CitySearch
           locations={this.state.locations}
