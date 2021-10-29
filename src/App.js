@@ -32,9 +32,7 @@ class App extends Component {
   }
 
   updateOnlineStatus() {
-    console.log('updating online status...');
     this.setState({ online: navigator.onLine });
-    console.log('Online state: ' + this.state.online);
   }
 
   componentWillUnmount() {
