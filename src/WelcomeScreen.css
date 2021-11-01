@@ -5,14 +5,19 @@
 :root {
   --main-color: #cc1f00;
   --highlight-color: #f89982;
+  font-family: 'Roboto';
+}
+.spacer {
+  height: 50px;
 }
 
 .WelcomeScreen {
   position: fixed;
   width: 100%;
+  max-width: 90%;
   height: 100%;
   top: 0;
-  background: white;
+  background: rgb(238, 238, 238);
   font-family: 'Roboto';
 }
 .login-button {
@@ -57,8 +62,11 @@
   height: 18px;
 }
 .btn-text {
+  margin: 0;
+  padding: 0;
+  display: block;
   float: right;
-  color: #fff;
+  color: rgb(255, 255, 255);
   font-size: 14px;
   letter-spacing: 0.2px;
   font-family: 'Roboto';
@@ -66,4 +74,19 @@
   width: 80%;
   height: 100%;
   text-align: center;
+  border: none;
+}
+
+h1 {
+  padding: 0;
+  margin: 0;
+  font-family: 'Roboto';
+  font-size: 50px;
+  letter-spacing: 1px;
+}
+h2 {
+  padding: 0;
+  margin: 0;
+  font-family: 'Roboto';
+  font-size: 30px;  
 }

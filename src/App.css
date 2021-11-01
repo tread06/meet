@@ -16,9 +16,13 @@
   box-sizing: border-box;
   font-family: 'Inter';
 }
+.banner {
+  width: 90%;
+  margin: auto;
+}
 
 .banner-text {
-  font-size: 80px;
+  font-size: 70px;
   color: var(--main-color);
   font-family: 'Lobster';
   text-shadow: 5px 3px var(--highlight-color);
