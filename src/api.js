@@ -32,7 +32,6 @@ export const getEvents = async () => {
   const token = await getAccessToken();
 
   if (token) {
-    //remove the code from the URL
     removeQuery();
 
     const url =

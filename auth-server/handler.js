@@ -117,11 +117,12 @@ module.exports.getCalendarEvents = async (event) => {
     redirect_uris[0]
   );
 
-  const access_token = decodeURIComponent(`${event.pathParameters.access_token}`);
+  const access_token = decodeURIComponent(
+    `${event.pathParameters.access_token}`
+  );
   oAuth2Client.setCredentials({ access_token });
 
-  return new Promise((resolve, reject) => {  
-
+  return new Promise((resolve, reject) => {
     //use the google API package to access the calendar api events endpoint
     calendar.events.list(
       {
@@ -129,7 +130,7 @@ module.exports.getCalendarEvents = async (event) => {
         auth: oAuth2Client,
         timeMin: new Date().toISOString(),
         singleEvents: true,
-        orderBy: "startTime",
+        orderBy: 'startTime',
       },
       (error, response) => {
         if (error) {
@@ -140,16 +141,16 @@ module.exports.getCalendarEvents = async (event) => {
       }
     );
   })
-    .then((results) => {      
+    .then((results) => {
       return {
         statusCode: 200,
         headers: {
           'Access-Control-Allow-Origin': '*',
         },
-        body: JSON.stringify({ events: results.data.items })
+        body: JSON.stringify({ events: results.data.items }),
       };
     })
-    .catch((err) => {      
+    .catch((err) => {
       console.error(err);
       return {
         statusCode: 500,

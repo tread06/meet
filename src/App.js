@@ -9,6 +9,8 @@ import Banner from './banner';
 import { BeatLoader } from 'react-spinners';
 import { ErrorAlert } from './Alert';
 import WelcomeScreen from './WelcomeScreen';
+import EventChart from './eventChart';
+import EventPieChart from './eventPieChart';
 
 class App extends Component {
   state = {
@@ -33,9 +35,21 @@ class App extends Component {
       const code = searchParams.get('code');
 
       //if a code is found or a the token is valid, don't show the welcome screen
-      this.setState({ showWelcomeScreen: !(code || isTokenValid) });
+      this.setState({
+        showWelcomeScreen: !(
+          code ||
+          isTokenValid ||
+          window.location.href.startsWith('http://localhost')
+        ),
+      });
 
-      if ((code || isTokenValid) && this.mounted) {
+      //get events when the code is foucen, the token is valid, or the app is running locally
+      if (
+        (code ||
+          isTokenValid ||
+          window.location.href.startsWith('http://localhost')) &&
+        this.mounted
+      ) {
         getEvents().then((events) => {
           if (this.mounted) {
             //to facilitate tests which unmount components immediatly and use mock data, only load data if the component is mounted
@@ -57,6 +71,18 @@ class App extends Component {
       }
     }
   }
+
+  getChartData = () => {
+    const { locations, events } = this.state;
+    const data = locations.map((location) => {
+      const number = events.filter(
+        (event) => event.location === location
+      ).length;
+      const city = location.split(', ').shift();
+      return { city, number };
+    });
+    return data;
+  };
 
   updateOnlineStatus() {
     this.setState({ online: navigator.onLine });
@@ -114,6 +140,13 @@ class App extends Component {
             size={40}
           />
         </div>
+
+        <div className="data">
+          <EventPieChart events={this.state.events} />
+          <EventChart data={this.getChartData()} />
+        </div>
+        
+
         <EventList events={this.state.events} count={this.state.eventCount} />
         <WelcomeScreen
           showWelcomeScreen={this.state.showWelcomeScreen}
