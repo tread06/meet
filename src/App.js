@@ -26,49 +26,52 @@ class App extends Component {
     this.mounted = true;
     this.setState({ isLoading: true });
 
-    //validate access token --- update show welcome screen status
-    if (this.state.online) {
-      console.log('online: true');
-      const accessToken = localStorage.getItem('access_token');
-      const isTokenValid = (await checkToken(accessToken)).error ? false : true;
-      const searchParams = new URLSearchParams(window.location.search);
-      const code = searchParams.get('code');
-
-      //if a code is found or a the token is valid, don't show the welcome screen
-      this.setState({
-        showWelcomeScreen: !(
-          code ||
-          isTokenValid ||
-          window.location.href.startsWith('http://localhost')
-        ),
-      });
-
-      //get events when the code is foucen, the token is valid, or the app is running locally
-      if (
-        (code ||
-          isTokenValid ||
-          window.location.href.startsWith('http://localhost')) &&
-        this.mounted
-      ) {
-        getEvents().then((events) => {
-          if (this.mounted) {
-            //to facilitate tests which unmount components immediatly and use mock data, only load data if the component is mounted
-            this.setState({ events, locations: extractLocations(events) });
-          }
-          this.setState({ isLoading: false });
-        });
-      }
+    //check if locally hosted or offline
+    if (
+      (window.location.href.startsWith('http://localhost') ||
+        !this.state.online) &&
+      this.mounted
+    ) {
+      this.initializeLocalOrOffline();
+      return;
     } else {
-      console.log('online: false');
+      this.initilaizeOnline();
+    }
+  }
+
+  initializeLocalOrOffline() {
+    getEvents().then((events) => {
       if (this.mounted) {
-        getEvents().then((events) => {
-          if (this.mounted) {
-            //to facilitate tests which unmount components immediatly and use mock data, only load data if the component is mounted
-            this.setState({ events, locations: extractLocations(events) });
-          }
-          this.setState({ isLoading: false });
-        });
+        //to facilitate tests which unmount components immediatly and use mock data, only load data if the component is still mounted
+        this.setState({ events, locations: extractLocations(events) });
       }
+      this.setState({ isLoading: false });
+    });
+  }
+
+  async initilaizeOnline() {
+    const accessToken = localStorage.getItem('access_token');
+    const isTokenValid = (await checkToken(accessToken)).error ? false : true;
+    const searchParams = new URLSearchParams(window.location.search);
+    const code = searchParams.get('code');
+
+    //if a code is found or a the token is valid, don't show the welcome screen
+    this.setState({
+      showWelcomeScreen: !(
+        code ||
+        isTokenValid ||
+        window.location.href.startsWith('http://localhost')
+      ),
+    });
+
+    //When the code is found or the token is valid, Get events
+    if ((code || isTokenValid) && this.mounted) {
+      getEvents().then((events) => {
+        if (this.mounted) {
+          this.setState({ events, locations: extractLocations(events) });
+        }
+        this.setState({ isLoading: false });
+      });
     }
   }
 
@@ -145,7 +148,6 @@ class App extends Component {
           <EventPieChart events={this.state.events} />
           <EventChart data={this.getChartData()} />
         </div>
-        
 
         <EventList events={this.state.events} count={this.state.eventCount} />
         <WelcomeScreen

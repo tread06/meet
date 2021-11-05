@@ -9,12 +9,11 @@ const feature = loadFeature('./src/features/filterEventsByCity.feature');
 
 defineFeature(feature, (test) => {
   test('When user hasn’t searched for a city, show upcoming events from all cities.', ({given,when,then,}) => {
-    given('user hasn’t searched for any city', () => {
+    given('user hasn’t searched for any city', () => { });
 
-    });
     let AppWrapper;
-    when('the user opens the app', () => {
-      AppWrapper = mount(<App />);
+    when('the user opens the app', async () => {
+      AppWrapper = await mount(<App />);
     });
 
     then('the user should see the list of upcoming events.', () => {
@@ -48,14 +47,16 @@ defineFeature(feature, (test) => {
     let AppWrapper;
     given('user was typing “Berlin” in the city textbox', async () => {
       AppWrapper = await mount(<App />);
-      AppWrapper.find('.city').simulate('change', {
+      let City = await AppWrapper.find('.city');
+      City.simulate('click');
+      City.simulate('change', {
         target: { value: 'Berlin' },
-      });
+      });      
     });
 
-    and('the list of suggested cities is showing', () => {
+    and('the list of suggested cities is showing', async () => {
       AppWrapper.update();
-      expect(AppWrapper.find('.suggestions li')).toHaveLength(2);
+      expect( await AppWrapper.find('.suggestions li')).toHaveLength(2);
     });
 
     when('the user selects a city (e.g., “Berlin, Germany”) from the list', () => {

@@ -85,7 +85,7 @@ describe('<App /> integration', () => {
   });
 
   test('number of events updated when user selects a different count', async () => {
-    const AppWrapper = mount(<App />);
+    const AppWrapper = await mount(<App />);
     AppWrapper.state.events = await getEvents();
 
     //simulate change count
@@ -97,9 +97,10 @@ describe('<App /> integration', () => {
     //expect the state of the App to change
     expect(AppWrapper.state('eventCount')).toEqual(1);
 
-    const eventList = AppWrapper.find(EventList);
-    //expect the state of the lust to match and display the correct number of items
+    const eventList = await AppWrapper.find(EventList);
+    //expect the state of the list to match and display the correct number of items
     expect(eventList.props().count).toEqual(1);
+
     expect(eventList.find('li')).toHaveLength(1);
     AppWrapper.unmount();
   });

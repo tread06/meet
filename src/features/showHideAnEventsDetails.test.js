@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import App from '../App';
 import { getEvents } from '../api';
-import { loadFeature, defineFeature } from 'jest-cucumber';
+import { loadFeature, defineFeature, waitFor } from 'jest-cucumber';
 import Event from '../Event';
 
 const feature = loadFeature('./src/features/showHideAnEventsDetails.feature');
@@ -14,11 +14,10 @@ defineFeature(feature, (test) => {
       AppWrapper = await mount(<App />);
       AppWrapper.state.events = await getEvents();  
     });
-    when('each event is first shown', () => {
-      AppWrapper.update();
-      expect(AppWrapper.find('.event')).toHaveLength(2);  
+    when('each event is first shown', () => {        
+      AppWrapper.update();      
     });
-    then('the event panel will hide additional details by being collapsed by default', () => {        
+    then('the event panel will hide additional details by being collapsed by default', async () => {        
       expect(AppWrapper.find('.event-details')).toHaveLength(0);
     });
   });
