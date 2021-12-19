@@ -41,7 +41,7 @@ Tanner Read - tread06@gmail.com
 
 Project Link: [https://github.com/tread06/meet](https://github.com/tread06/meet)
 <br />
-Documentation Link: [https://tread06.github.io/meet/](https://tread06.github.io/meet/)
+Website Link: [https://tread06.github.io/meet/](https://tread06.github.io/meet/)
 
 <!-- MARKDOWN LINKS & IMAGES -->
 [product-screenshot]: images/screenshot.png
