@@ -164,7 +164,9 @@ input[type='number'] {
   margin: 0 auto;
   position: relative;
   font-family: 'Roboto';
-  color: rgba(0, 0, 0, 0.397);
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.6);
+  margin-bottom: 20px;
 }
 
 .suggestions {
@@ -210,7 +212,11 @@ input[type='number'] {
   margin: auto;
   position: relative;
   font-family: 'Roboto';
-  color: rgba(0, 0, 0, 0.397);
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.6);
+}
+.numberLabel {
+  margin-bottom: 15px;
 }
 
 .button-wrapper {

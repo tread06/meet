@@ -48,7 +48,7 @@ function EventPieChart({ events }) {
         className="pie-text"
         x={x}
         y={y}
-        fill="#cc1f00"
+        fill="#000"
         textAnchor={x > cx ? 'start' : 'end'}
         dominantBaseline="central"
       >
